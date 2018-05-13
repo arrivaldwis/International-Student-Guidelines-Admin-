@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sandywinata.isgupdate">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,7 +24,6 @@
         <activity android:name=".DetailAccomodation" />
         <activity android:name=".PointOfInterest" />
         <activity android:name=".ChatList" />
-        <activity android:name=".DetailChat" />
         <activity android:name=".MessageList" />
         <activity android:name=".MessageReceived" />
         <activity android:name=".MessageSent" />

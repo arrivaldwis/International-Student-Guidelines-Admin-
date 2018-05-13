@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "479027633950",
+    "firebase_url": "https://international-student-guide.firebaseio.com",
+    "project_id": "international-student-guide",
+    "storage_bucket": "international-student-guide.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:479027633950:android:db2c0c148d38e7d2",
+        "android_client_info": {
+          "package_name": "com.sandywinata.isgupdate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "479027633950-300or0dfcqbjmsnj7h4ol74hpsbkkd5c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sandywinata.isgupdate",
+            "certificate_hash": "daf1262783612ca2429f43f5ee4041434fdd84f1"
+          }
+        },
+        {
+          "client_id": "479027633950-u8fhb6ss27rckhg9nd455pvgcihe39ct.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBA96qzXC3owB4oEOTasgC4h-nEFyQU96w"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "479027633950-u8fhb6ss27rckhg9nd455pvgcihe39ct.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
