@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#ececec"
     android:orientation="vertical"
-    tools:context="com.sandywinata.isgupdate.Accomodation">
+    tools:context="com.sandywinata.isgupdate.view.Accomodation">
 
     <!-- CONTOH SATU HOTEL-->
     <LinearLayout

@@ -1,13 +1,15 @@
-package com.sandywinata.isgupdate;
+package com.sandywinata.isgupdate.view;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class AddUser extends AppCompatActivity {
+import com.sandywinata.isgupdate.R;
+
+public class Accomodation extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_user);
+        setContentView(R.layout.activity_accomodation);
     }
 }

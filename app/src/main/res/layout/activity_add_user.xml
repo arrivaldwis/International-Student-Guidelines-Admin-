@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.sandywinata.isgupdate.AddUser">
+    tools:context="com.sandywinata.isgupdate.view.AddUser">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,7 +24,8 @@
                 android:id="@+id/txtPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"/>
+                android:hint="Password"
+                android:inputType="textPassword"/>
             <EditText
                 android:id="@+id/txtEmail"
                 android:layout_width="match_parent"

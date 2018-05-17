@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:weightSum="10"
     android:background="#ececec"
-    tools:context="com.sandywinata.isgupdate.MainActivity">
+    tools:context="com.sandywinata.isgupdate.view.MainActivity">
 
     <!-- TOP CONTENT -->
     <RelativeLayout
@@ -15,10 +15,14 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:background="@color/colorPrimary">
-        <ImageView
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleType="fitXY"/>
+            android:text="Welcome, Sandy!"
+            android:layout_centerInParent="true"
+            android:textColor="#fff"
+            android:textSize="22sp"/>
     </RelativeLayout>
 
     <!-- Menu -->
@@ -55,7 +59,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:text="Accademic Calender"
+                    android:text="Academic Calender"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
@@ -70,7 +74,7 @@
         <!--- Row 1 -->
         <!--- Column 2 -->
         <android.support.v7.widget.CardView
-            android:id="@+id/cvAccomodation"
+            android:id="@+id/cvAddUser"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_columnWeight="1"
@@ -92,7 +96,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Accomodation"
+                    android:text="Add User"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
@@ -206,7 +210,7 @@
         <!--- Row 3 -->
         <!--- Column 2 -->
         <android.support.v7.widget.CardView
-            android:id="@+id/cvAddUser"
+            android:id="@+id/cvAccomodation"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_columnWeight="1"
@@ -228,7 +232,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Add User"
+                    android:text="Logout"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"

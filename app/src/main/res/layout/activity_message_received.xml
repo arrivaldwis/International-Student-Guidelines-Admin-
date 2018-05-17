@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="10dp"
-    tools:context="com.sandywinata.isgupdate.MessageReceived">
+    tools:context="com.sandywinata.isgupdate.view.MessageReceived">
 
     <ImageView
         android:id="@+id/image_message_profile"

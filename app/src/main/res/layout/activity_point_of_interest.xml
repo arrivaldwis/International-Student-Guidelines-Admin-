@@ -1,96 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.sandywinata.isgupdate.PointOfInterest">
+    android:padding="8dp"
+    tools:context="com.sandywinata.isgupdate.view.PointOfInterest">
 
     <!--Contoh Sesuai Indigo -->
-    <LinearLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvData"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/txtHeaderPointofInterest"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:textAlignment="center"
-            android:textSize="25dp"
-            android:text="Point of Interest in Beijing"/>
-        <EditText
-            android:id="@+id/txtForbiddenCity"
-            android:layout_below="@id/txtHeaderPointofInterest"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="1. Forbidden City"
-            android:textSize="20dp" />
-        <RelativeLayout
-            android:id="@+id/txtdetailForbiddenCity"
-            android:layout_below="@id/txtForbiddenCity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/imgForbiddenCity"
-                android:layout_width="150dp"
-                android:layout_height="100dp"
-                android:layout_alignParentLeft="true"
-                android:scaleType="centerCrop" />
-            <EditText
-                android:layout_toRightOf="@id/imgForbiddenCity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Ticket Entrance :"
-                />
-        </RelativeLayout>
-        <EditText
-            android:layout_below="@id/txtdetailForbiddenCity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Address :"/>
-    </LinearLayout>
+        android:id="@+id/btnAdd"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:src="@android:drawable/ic_input_add"
+        android:tint="#fff"/>
 
-    <!-- Contoh dua-->
-    <!--<GridLayout
-        android:columnCount="1"
-        android:rowCount="2"
-        android:alignmentMode="alignMargins"
-        android:columnOrderPreserved="false"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
-
-    <android.support.v7.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_columnWeight="1"
-        android:layout_rowWeight="1"
-        app:cardElevation="8dp">
-        <RelativeLayout
-            android:layout_gravity="center"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <ImageView
-                android:src="@drawable/forbiddencity2"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"/>
-            <TextView
-                android:text="Apr-Oct : 40RMB | Nov-Mar : 60RMB"
-                android:textColor="@android:color/holo_red_dark"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:layout_alignParentBottom="true"
-                android:paddingBottom="16dp"
-                />
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-    </GridLayout> -->
-
-</LinearLayout>
+</RelativeLayout>

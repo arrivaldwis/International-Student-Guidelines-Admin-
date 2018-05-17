@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sandywinata.isgupdate">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,23 +11,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".view.MainActivity" />
+        <activity android:name=".view.AcademicCal" />
+        <activity android:name=".view.Accomodation" />
+        <activity android:name=".view.Contacts" />
+        <activity android:name=".view.DetailAccomodation" />
+        <activity android:name=".view.PointOfInterest" />
+        <activity android:name=".view.ChatList" />
+        <activity android:name=".view.MessageList" />
+        <activity android:name=".view.MessageReceived" />
+        <activity android:name=".view.MessageSent" />
+        <activity android:name=".view.AddUser" />
+        <activity android:name=".view.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AcademicCal" />
-        <activity android:name=".Accomodation" />
-        <activity android:name=".Contacts" />
-        <activity android:name=".DetailAccomodation" />
-        <activity android:name=".PointOfInterest" />
-        <activity android:name=".ChatList" />
-        <activity android:name=".MessageList" />
-        <activity android:name=".MessageReceived" />
-        <activity android:name=".MessageSent" />
-        <activity android:name=".AddUser"></activity>
+        <activity android:name=".view.AddPOIActivity" />
+        <activity android:name=".view.AddContactActivity"></activity>
     </application>
 
 </manifest>

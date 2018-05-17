@@ -1,9 +1,15 @@
-package com.sandywinata.isgupdate;
+package com.sandywinata.isgupdate.view;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.sandywinata.isgupdate.R;
+import com.sandywinata.isgupdate.config.Constants;
+import com.sandywinata.isgupdate.model.UserModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,12 +29,20 @@ public class MainActivity extends AppCompatActivity {
     CardView cvAddUser;
     @BindView(R.id.cvPointofInterest)
     CardView cvPointofInterest;
+    @BindView(R.id.tvName)
+    TextView tvName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        loadName();
+    }
+
+    private void loadName() {
+        UserModel user = Constants.getLoginUser(this);
+        tvName.setText("Welcome, "+user.getName()+"!");
     }
 
     @OnClick(R.id.cvAcademicCal)
@@ -39,8 +53,10 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.cvAccomodation)
     public void accommodation() {
-        Intent intent = new Intent(MainActivity.this, Accomodation.class);
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @OnClick(R.id.cvContact)
