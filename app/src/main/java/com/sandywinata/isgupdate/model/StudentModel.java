@@ -8,7 +8,7 @@ public class StudentModel {
     public StudentModel() {
     }
 
-    public StudentModel(String studentId, String name, String email) {
+    public StudentModel(String studentId, String email, String name) {
         this.studentId = studentId;
         this.name = name;
         this.email = email;

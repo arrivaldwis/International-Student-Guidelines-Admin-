@@ -20,8 +20,8 @@ public class AddUser extends AppCompatActivity {
     EditText txtID;
     @BindView(R.id.txtEmail)
     EditText txtEmail;
-    @BindView(R.id.txtPassword)
-    EditText txtPassword;
+    @BindView(R.id.txtName)
+    EditText txtName;
     @BindView(R.id.btnAdd)
     Button btnAdd;
 
@@ -48,16 +48,16 @@ public class AddUser extends AppCompatActivity {
             return;
         }
         
-        if(txtPassword.getText().toString().isEmpty()) {
-            txtPassword.setError("Required");
+        if(txtName.getText().toString().isEmpty()) {
+            txtName.setError("Required");
             return;
         }
         
         String sId =  txtID.getText().toString();
         String email =  txtEmail.getText().toString();
-        String pass =  txtPassword.getText().toString();
+        String name =  txtName.getText().toString();
         
-        Constants.refStudent.push().setValue(new StudentModel(sId, email, pass));
+        Constants.refStudent.push().setValue(new StudentModel(sId, email, name));
         Toast.makeText(this, "Student has successfully added!", Toast.LENGTH_SHORT).show();
     }
 }
