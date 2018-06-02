@@ -18,12 +18,16 @@ import com.esafirm.imagepicker.features.ReturnMode;
 import com.esafirm.imagepicker.model.Image;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.sandywinata.isgupdate.R;
 import com.sandywinata.isgupdate.config.Constants;
 import com.sandywinata.isgupdate.model.ContactModel;
 import com.sandywinata.isgupdate.model.POIModel;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -51,12 +55,34 @@ public class AddContactActivity extends AppCompatActivity {
     @BindView(R.id.tvEmail)
     EditText etEmail;
     private StorageReference refPhotoProfile;
+    private String mode = "";
+    private ContactModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
         ButterKnife.bind(this);
+        checkMode();
+    }
+
+    private void checkMode() {
+        if(getIntent().getExtras()!=null) {
+            mode = getIntent().getStringExtra("mode");
+            model = (ContactModel) getIntent().getSerializableExtra("model");
+            if (mode.equals("edit")) {
+                isPicChange = true;
+                btnAdd.setText("Update");
+                etEmail.setEnabled(false);
+                etEmail.setText(model.getEmail());
+                etMobile.setText(model.getMobile());
+                etOccupation.setText(model.getJabatan());
+                etPhone.setText(model.getPhone());
+                etOffice.setText(model.getOffice());
+                etName.setText(model.getName());
+                Picasso.get().load(model.getImgUrl()).into(imgPerson);
+            }
+        }
     }
 
     @OnClick(R.id.imgPerson)
@@ -83,39 +109,39 @@ public class AddContactActivity extends AppCompatActivity {
     }
 
     private void addPOI() {
-        if(etName.getText().toString().isEmpty()) {
+        if (etName.getText().toString().isEmpty()) {
             etName.setError("Required");
             return;
         }
-        if(etEmail.getText().toString().isEmpty()) {
+        if (etEmail.getText().toString().isEmpty()) {
             etEmail.setError("Required");
             return;
         }
-        if(etMobile.getText().toString().isEmpty()) {
+        if (etMobile.getText().toString().isEmpty()) {
             etMobile.setError("Required");
             return;
         }
-        if(etOccupation.getText().toString().isEmpty()) {
+        if (etOccupation.getText().toString().isEmpty()) {
             etOccupation.setError("Required");
             return;
         }
-        if(etOffice.getText().toString().isEmpty()) {
+        if (etOffice.getText().toString().isEmpty()) {
             etOffice.setError("Required");
             return;
         }
-        if(etPhone.getText().toString().isEmpty()) {
+        if (etPhone.getText().toString().isEmpty()) {
             etPhone.setError("Required");
             return;
         }
 
-        final String name =  etName.getText().toString();
-        final String occupation =  etOccupation.getText().toString();
-        final String phone =  etPhone.getText().toString();
-        final String mobile =  etMobile.getText().toString();
-        final String email =  etEmail.getText().toString();
-        final String office =  etOffice.getText().toString();
+        final String name = etName.getText().toString();
+        final String occupation = etOccupation.getText().toString();
+        final String phone = etPhone.getText().toString();
+        final String mobile = etMobile.getText().toString();
+        final String email = etEmail.getText().toString();
+        final String office = etOffice.getText().toString();
 
-        if(isPicChange) {
+        if (isPicChange) {
 
             //penggunaan firebase storage untuk store gambar yang di pilih
             //penamaan folder dan nama gambar yang diupload
@@ -147,9 +173,31 @@ public class AddContactActivity extends AppCompatActivity {
                     // Jika upload berhasil jalankan method didalam
                     // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                     photoUrl = taskSnapshot.getDownloadUrl();
-                    Constants.refContact.push().setValue(new ContactModel(name, occupation,
-                            office, email, phone, mobile, photoUrl.toString()));
-                    Toast.makeText(AddContactActivity.this, "Contact has successfully added!", Toast.LENGTH_SHORT).show();
+
+                    if(mode.equals("edit")) {
+                        Constants.refContact.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot ds:dataSnapshot.getChildren()) {
+                                    ContactModel model = ds.getValue(ContactModel.class);
+                                    if(model.getEmail().equals(email)) {
+                                        Constants.refContact.child(ds.getKey()).setValue(new ContactModel(name, occupation,
+                                                office, email, phone, mobile, photoUrl.toString()));
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                    } else {
+                        Constants.refContact.push().setValue(new ContactModel(name, occupation,
+                                office, email, phone, mobile, photoUrl.toString()));
+                    }
+
+                    Toast.makeText(AddContactActivity.this, "Contact has successfully updated!", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             });

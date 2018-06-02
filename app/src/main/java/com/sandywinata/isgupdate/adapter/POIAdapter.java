@@ -1,6 +1,7 @@
 package com.sandywinata.isgupdate.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,9 +10,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.sandywinata.isgupdate.R;
+import com.sandywinata.isgupdate.config.Constants;
 import com.sandywinata.isgupdate.model.ContactModel;
 import com.sandywinata.isgupdate.model.POIModel;
+import com.sandywinata.isgupdate.view.AddContactActivity;
+import com.sandywinata.isgupdate.view.AddPOIActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -39,6 +46,8 @@ public class POIAdapter extends RecyclerView.Adapter<POIAdapter.ViewHolder> {
         TextView ticket;
         TextView desc;
         ImageView photo;
+        ImageView imgEdit;
+        ImageView imgDelete;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -46,6 +55,8 @@ public class POIAdapter extends RecyclerView.Adapter<POIAdapter.ViewHolder> {
             ticket = itemView.findViewById(R.id.tvTicket);
             desc = itemView.findViewById(R.id.tvDesc);
             photo = itemView.findViewById(R.id.imgPoi);
+            imgDelete = itemView.findViewById(R.id.imgDelete);
+            imgEdit = itemView.findViewById(R.id.imgEdit);
         }
     }
 
@@ -64,7 +75,42 @@ public class POIAdapter extends RecyclerView.Adapter<POIAdapter.ViewHolder> {
         holder.name.setText(comment.getName());
         holder.ticket.setText("Ticket entrance:\n"+comment.getTicket());
         holder.desc.setText("Description:\n"+comment.getDesc());
+        holder.imgDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteData(comment);
+            }
+        });
+
+        holder.imgEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context, AddPOIActivity.class);
+                i.putExtra("mode", "edit");
+                i.putExtra("model", comment);
+                context.startActivity(i);
+            }
+        });
         Picasso.get().load(comment.getImgUrl()).into(holder.photo);
+    }
+
+    private void deleteData(final POIModel contact) {
+        Constants.refPOI.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds:dataSnapshot.getChildren()) {
+                    POIModel model = ds.getValue(POIModel.class);
+                    if(model.getName().equals(contact.getName())) {
+                        Constants.refPOI.child(ds.getKey()).removeValue();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override

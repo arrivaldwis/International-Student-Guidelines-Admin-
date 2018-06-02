@@ -1,6 +1,7 @@
 package com.sandywinata.isgupdate.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,8 +10,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.sandywinata.isgupdate.R;
+import com.sandywinata.isgupdate.config.Constants;
 import com.sandywinata.isgupdate.model.ContactModel;
+import com.sandywinata.isgupdate.view.AddContactActivity;
 import com.sandywinata.isgupdate.view.Contacts;
 import com.squareup.picasso.Picasso;
 
@@ -42,6 +48,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         TextView phone;
         TextView email;
         ImageView person_photo;
+        ImageView imgEdit;
+        ImageView imgDelete;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -52,6 +60,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
             phone = itemView.findViewById(R.id.phone);
             email = itemView.findViewById(R.id.email);
             person_photo = itemView.findViewById(R.id.person_photo);
+            imgDelete = itemView.findViewById(R.id.imgDelete);
+            imgEdit = itemView.findViewById(R.id.imgEdit);
         }
     }
 
@@ -73,7 +83,42 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         holder.mobile.setText(comment.getMobile());
         holder.phone.setText(comment.getPhone());
         holder.email.setText(comment.getEmail());
+        holder.imgDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteData(comment);
+            }
+        });
+
+        holder.imgEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context, AddContactActivity.class);
+                i.putExtra("mode", "edit");
+                i.putExtra("model", comment);
+                context.startActivity(i);
+            }
+        });
         Picasso.get().load(comment.getImgUrl()).into(holder.person_photo);
+    }
+
+    private void deleteData(final ContactModel contact) {
+        Constants.refContact.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds:dataSnapshot.getChildren()) {
+                    ContactModel model = ds.getValue(ContactModel.class);
+                    if(model.getEmail().equals(contact.getEmail())) {
+                        Constants.refContact.child(ds.getKey()).removeValue();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override

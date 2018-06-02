@@ -1,6 +1,8 @@
 package com.sandywinata.isgupdate.model;
 
-public class POIModel {
+import java.io.Serializable;
+
+public class POIModel implements Serializable {
     public String name;
     public String imgUrl;
     public String desc;

@@ -10,7 +10,8 @@
     android:scrollbars = "vertical"
     android:scrollbarStyle="insideInset"
     tools:context="com.sandywinata.isgupdate.view.Contacts"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:paddingBottom="40dp">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvData"

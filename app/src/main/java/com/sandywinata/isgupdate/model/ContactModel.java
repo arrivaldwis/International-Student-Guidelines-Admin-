@@ -1,6 +1,8 @@
 package com.sandywinata.isgupdate.model;
 
-public class ContactModel {
+import java.io.Serializable;
+
+public class ContactModel implements Serializable {
     public String name;
     public String jabatan;
     public String office;

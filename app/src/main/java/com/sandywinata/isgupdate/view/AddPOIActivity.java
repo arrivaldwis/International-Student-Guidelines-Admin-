@@ -29,6 +29,7 @@ import com.sandywinata.isgupdate.config.Constants;
 import com.sandywinata.isgupdate.model.AcademicModel;
 import com.sandywinata.isgupdate.model.POIModel;
 import com.sandywinata.isgupdate.model.StudentModel;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -50,12 +51,31 @@ public class AddPOIActivity extends AppCompatActivity {
     @BindView(R.id.tvTicket)
     EditText etTicket;
     private StorageReference refPhotoProfile;
+    private String mode = "";
+    private POIModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_poi);
         ButterKnife.bind(this);
+        checkMode();
+    }
+
+    private void checkMode() {
+        if(getIntent().getExtras()!=null) {
+            mode = getIntent().getStringExtra("mode");
+            model = (POIModel) getIntent().getSerializableExtra("model");
+            if (mode.equals("edit")) {
+                isPicChange = true;
+                btnAdd.setText("Update");
+                etName.setEnabled(false);
+                etName.setText(model.getName());
+                etTicket.setText(model.getTicket());
+                etDesc.setText(model.getDesc());
+                Picasso.get().load(model.getImgUrl()).into(imgPOI);
+            }
+        }
     }
 
     @OnClick(R.id.imgPOI)
@@ -131,8 +151,29 @@ public class AddPOIActivity extends AppCompatActivity {
                     // Jika upload berhasil jalankan method didalam
                     // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                     photoUrl = taskSnapshot.getDownloadUrl();
-                    Constants.refPOI.push().setValue(new POIModel(name, photoUrl.toString(), desc, ticket));
-                    Toast.makeText(AddPOIActivity.this, "Point of Interest has successfully added!", Toast.LENGTH_SHORT).show();
+
+                    if(mode.equals("edit")) {
+                        Constants.refPOI.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot ds:dataSnapshot.getChildren()) {
+                                    POIModel model = ds.getValue(POIModel.class);
+                                    if(model.getName().equals(name)) {
+                                        Constants.refPOI.child(ds.getKey()).setValue(new POIModel(name, photoUrl.toString(), desc, ticket));
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                    } else {
+                        Constants.refPOI.push().setValue(new POIModel(name, photoUrl.toString(), desc, ticket));
+                    }
+
+                    Toast.makeText(AddPOIActivity.this, "Point of Interest has successfully updated!", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             });
